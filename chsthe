@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desenhando com JavaScript</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+        canvas {
+            border: 2px solid #333;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="desenhoCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('desenhoCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let desenhando = false;
+
+        // Configurações da caneta (cor e tamanho)
+        ctx.strokeStyle = '#000000';  // Cor da linha
+        ctx.lineWidth = 5;            // Largura da linha
+
+        // Função para começar a desenhar
+        canvas.addEventListener('mousedown', (e) => {
+            desenhando = true;
+            ctx.beginPath();
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        // Função para desenhar enquanto o mouse se move
+        canvas.addEventListener('mousemove', (e) => {
+            if (desenhando) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        // Função para parar o desenho
+        canvas.addEventListener('mouseup', () => {
+            desenhando = false;
+        });
+
+        // Função para limpar a tela
+        canvas.addEventListener('dblclick', () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        });
+    </script>
+</body>
+</html>
